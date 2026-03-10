@@ -7,10 +7,12 @@ import AddTask from "./pages/AddTask";
 import TaskList from "./pages/TaskList";
 import EditTask from "./pages/EditTask";
 import Assignments from "./pages/Assignments";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
