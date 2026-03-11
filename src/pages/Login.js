@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -22,31 +23,34 @@ function Login() {
     }
 
     return (
-        <div className="auth-container">
-            <form onSubmit={handleLogin} className="auth-box">
-                <h2>Login</h2>
+        <>
+            <Navbar />
+            <div className="auth-container">
+                <form onSubmit={handleLogin} className="auth-box">
+                    <h2>Login</h2>
 
-                {error && <p className="error">{error}</p>}
+                    {error && <p className="error">{error}</p>}
 
-                <input
-                    type="email"
-                    placeholder="Email"
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        required
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                <button>Login</button>
+                    <button>Login</button>
 
-                <p>Don't have account? <Link to="/register">Register</Link></p>
-            </form>
-        </div>
+                    <p>Don't have account? <Link to="/register">Register</Link></p>
+                </form>
+            </div>
+        </>
     );
 }
 
