@@ -23,6 +23,18 @@ function TaskList() {
             <Navbar />
             <div className="task-list">
                 <h2>Your Tasks</h2>
+                <button className="export-btn" onClick={() => {
+                    const data = JSON.stringify(tasks, null, 2);
+                    const blob = new Blob([data], { type: "application/json" });
+                    const url = URL.createObjectURL(blob);
+
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "tasks.json";
+                    a.click();
+                }}>
+                    Export Tasks
+                </button>
 
                 {tasks.length === 0 && <p>No tasks added yet.</p>}
 

@@ -245,3 +245,13 @@ body {
         transform: translateY(0);
     }
 }
+
+.export-btn {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
