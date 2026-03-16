@@ -255,3 +255,59 @@ body {
     margin-bottom: 20px;
     cursor: pointer;
 }
+
+/* Smooth transition */
+body {
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* LIGHT MODE */
+body.light {
+    background: #f4f7fb;
+    color: #1e293b;
+}
+
+body.light .card,
+body.light .task-card,
+body.light .task-form,
+body.light .auth-box {
+    background: white;
+    color: #1e293b;
+}
+
+/* DARK MODE */
+body.dark {
+    background: #0f172a;
+    color: white;
+}
+
+body.dark .navbar {
+    background: #111827;
+}
+
+body.dark .card,
+body.dark .task-card,
+body.dark .task-form,
+body.dark .auth-box {
+    background: #1e293b;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select {
+    background: #334155;
+    color: white;
+    border: 1px solid #475569;
+}
+
+/* Theme button */
+.theme-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
