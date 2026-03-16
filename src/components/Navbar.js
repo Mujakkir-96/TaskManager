@@ -1,14 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
+
 
 
 function Navbar() {
     const navigate = useNavigate();
     const user = localStorage.getItem("user");
+
     const [theme, setTheme] = useState(
         localStorage.getItem("theme") || "light"
     );
+
+    const [menuOpen, setMenuOpen] = useState(false);
+
     useEffect(() => {
         document.body.className = theme;
         localStorage.setItem("theme", theme);
@@ -28,20 +33,22 @@ function Navbar() {
     return (
         <div className="navbar">
             <h2>Student Manager</h2>
-            <div className="items">
-                <Link to="/dashboard">Dashboard</Link>
-                <Link to="/tasks">Tasks</Link>
-                <Link to="/add-task">Add Task</Link>
-                <Link to="/assignments">Assignments</Link>
 
-                <div>
+            <div className={`nav-links ${menuOpen ? "active" : ""}`}>
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+                <Link to="/tasks" onClick={() => setMenuOpen(false)}>Tasks</Link>
+                <Link to="/add-task" onClick={() => setMenuOpen(false)}>Add Task</Link>
+                <Link to="/assignments" onClick={() => setMenuOpen(false)}>Assignments</Link>
 
-                    <button className="theme-btn" onClick={toggleTheme}>
-                        {theme === "light" ? <FaMoon /> : <FaSun />}
-                    </button>
+                <button className="theme-btn" onClick={toggleTheme}>
+                    {theme === "light" ? <FaMoon /> : <FaSun />}
+                </button>
 
-                    <button onClick={logout}>Logout</button>
-                </div>
+                <button onClick={logout}>Logout</button>
+            </div>
+
+            <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+                {menuOpen ? <FaTimes /> : <FaBars />}
             </div>
         </div>
     );

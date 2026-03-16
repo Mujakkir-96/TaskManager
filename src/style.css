@@ -7,18 +7,31 @@ body {
 .navbar {
     background: #1e293b;
     color: white;
-    padding: 15px 40px;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
-.navbar a {
+.nav-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-links a {
     color: white;
-    margin-right: 15px;
     text-decoration: none;
     font-weight: 500;
 }
+
+.hamburger {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
 
 .navbar button {
     background: #ef4444;
@@ -28,6 +41,36 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #1e293b;
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        gap: 20px;
+        transform: translateX(100%);
+        transition: 0.3s ease-in-out;
+        border-radius: 0 0 0 10px;
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+body.dark .nav-links {
+    background: #111827;
+}
+
 
 .auth-container {
     display: flex;
