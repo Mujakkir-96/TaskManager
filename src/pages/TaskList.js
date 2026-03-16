@@ -6,6 +6,9 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 function TaskList() {
     const [tasks, setTasks] = useState([]);
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filterStatus, setFilterStatus] = useState("All");
+
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -17,6 +20,17 @@ function TaskList() {
         localStorage.setItem("tasks", JSON.stringify(updated));
         setTasks(updated);
     }
+    const filteredTasks = tasks.filter(task => {
+        const matchesSearch = task.title
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+
+        const matchesFilter =
+            filterStatus === "All" || task.status === filterStatus;
+
+        return matchesSearch && matchesFilter;
+    });
+
 
     return (
         <>
@@ -37,9 +51,28 @@ function TaskList() {
                 </button>
 
                 {tasks.length === 0 && <p>No tasks added yet.</p>}
+                <div className="filter-bar">
+                    <input
+                        type="text"
+                        placeholder="Search task..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+
+                    <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value)}
+                    >
+                        <option value="All">All</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
 
                 <div className="task-grid">
-                    {tasks.map(task => (
+                    {filteredTasks.map(task => (
+
                         <div key={task.id} className="task-card">
                             <h3>{task.title}</h3>
                             <p>{task.description}</p>

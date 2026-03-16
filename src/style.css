@@ -311,3 +311,23 @@ body.dark select {
     margin-right: 10px;
     cursor: pointer;
 }
+
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-bar input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+.filter-bar select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
