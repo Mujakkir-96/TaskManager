@@ -1,70 +1,260 @@
-# Getting Started with Create React App
+#  Student Task & Assignment Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application designed to help students manage their tasks, assignments, and deadlines efficiently. The system provides a modern user interface with real-time data handling using a React frontend and PHP backend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+#  Features
 
-### `npm start`
+*  User Authentication (Register / Login / Logout)
+*  Dashboard with task statistics
+*  Task Management (Add, Edit, Delete, View)
+*  Assignment Management
+*  Search and Filter Tasks
+*  Dark / Light Mode
+*  Responsive Mobile Design
+*  Export Tasks as JSON
+*  Full Backend Integration (API + Database)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 🛠️ Technologies Used
 
-### `npm test`
+## Frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* React.js (SPA)
+* HTML5
+* CSS3
+* JavaScript (ES6)
+* React Router
+* React Icons
 
-### `npm run build`
+## Backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* PHP (REST API)
+* MySQL Database
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tools
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Git & GitHub (Version Control)
+* Postman (API Testing)
+* XAMPP (Local Server)
+* VS Code (Editor)
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#  Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+project-root/
+│
+├── frontend/              # React Application
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   └── utils/api.js
+│
+├── student-manager-api/   # PHP Backend
+│   ├── auth/
+│   ├── tasks/
+│   ├── assignments/
+│   ├── db.php
+│   └── test.php
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#  Installation & Setup Guide
 
-## Learn More
+## Step 1: Install Required Software
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 1. Install XAMPP
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Download: https://www.apachefriends.org
+Install and open XAMPP Control Panel.
 
-### Code Splitting
+### 2. Install Node.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Download: https://nodejs.org (LTS version)
 
-### Analyzing the Bundle Size
+### 3. Install VS Code (Optional)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Download: https://code.visualstudio.com
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Step 2: Setup Backend
 
-### Advanced Configuration
+### Start Server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+* Open XAMPP
+* Start:
 
-### Deployment
+  * Apache
+  * MySQL 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+### Place Backend Files
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Copy folder:
+
+```
+student-manager-api
+```
+
+Into:
+
+```
+C:\xampp\htdocs\
+```
+
+---
+
+### Create Database
+
+1. Open:
+
+```
+http://localhost/phpmyadmin
+```
+
+2. Create database:
+
+```
+student_manager
+```
+
+---
+
+### Create Tables
+
+Run this SQL:
+
+```sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  password VARCHAR(255)
+);
+
+CREATE TABLE tasks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  title VARCHAR(255),
+  description TEXT,
+  deadline DATE,
+  status VARCHAR(50)
+);
+
+CREATE TABLE assignments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  subject VARCHAR(100),
+  title VARCHAR(255),
+  due_date DATE,
+  status VARCHAR(50)
+);
+```
+
+---
+
+### Test Backend
+
+Open:
+
+```
+http://localhost/student-manager-api/test.php
+```
+
+You should see:
+
+```
+Database connected successfully!
+```
+
+---
+
+## Step 3: Setup Frontend
+
+1. Open terminal inside frontend folder
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start project:
+
+```bash
+npm start
+```
+
+4. Open in browser:
+
+```
+http://localhost:3000
+```
+
+---
+
+# Running the Application
+
+Make sure:
+
+| Service | Status    |
+| ------- | --------- |
+| Apache  |  Running |
+| MySQL   |  Running |
+| React   |  Running |
+
+---
+
+#  How to Use
+
+1. Register a new user
+2. Login
+3. Add tasks
+4. Manage assignments
+5. View dashboard
+
+---
+
+# Common Issues & Fix
+
+## CORS Error
+
+If you see error:
+
+> Blocked by CORS policy
+
+Add this at the top of all PHP files:
+
+```php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+```
+
+---
+
+# Project Architecture
+
+This project follows **Single Page Application (SPA)** architecture:
+
+* React handles UI
+* PHP handles API
+* MySQL stores data
+
+Frontend communicates with backend using HTTP requests (JSON).
+
+---
+
+# Version Control
+
+All code is managed using GitHub with multiple commits showing project progress.
+
+---
+

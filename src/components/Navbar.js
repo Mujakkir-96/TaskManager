@@ -24,8 +24,13 @@ function Navbar() {
     };
 
     const logout = () => {
-        localStorage.removeItem("user");
-        navigate("/");
+        try {
+            localStorage.removeItem("user");
+            setMenuOpen(false);
+            navigate("/");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     };
 
     if (!user) return null;
