@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
-
-
+import "../style.css";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -15,7 +14,8 @@ function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
-        document.body.className = theme;
+        document.body.classList.remove("light", "dark");
+        document.body.classList.add(theme);
         localStorage.setItem("theme", theme);
     }, [theme]);
 

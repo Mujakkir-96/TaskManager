@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { getTasks, deleteTask } from "../utils/api";
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
@@ -11,15 +12,19 @@ function TaskList() {
 
 
     useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        setTasks(storedTasks);
+        const fetchTasks = async () => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const data = await getTasks(user.id);
+            setTasks(data);
+        };
+
+        fetchTasks();
     }, []);
 
-    const deleteTask = (id) => {
-        const updated = tasks.filter(task => task.id !== id);
-        localStorage.setItem("tasks", JSON.stringify(updated));
-        setTasks(updated);
-    }
+    const handleDelete = async (id) => {
+        await deleteTask(id);
+        setTasks(tasks.filter(task => task.id !== id));
+    };
     const filteredTasks = tasks.filter(task => {
         const matchesSearch = task.title
             .toLowerCase()
@@ -84,7 +89,7 @@ function TaskList() {
 
                             <div className="actions">
                                 <FaEdit onClick={() => navigate(`/edit/${task.id}`)} />
-                                <FaTrash onClick={() => deleteTask(task.id)} />
+                                <FaTrash onClick={() => handleDelete(task.id)} />
                             </div>
                         </div>
                     ))}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { loginUser } from "../utils/api";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -8,19 +9,18 @@ function Login() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
 
-        const user = JSON.parse(localStorage.getItem("registeredUser"));
+        const res = await loginUser({ email, password });
 
-        if (!user || user.email !== email || user.password !== password) {
-            setError("Invalid email or password");
-            return;
+        if (res.status === "success") {
+            localStorage.setItem("user", JSON.stringify(res.user));
+            navigate("/dashboard");
+        } else {
+            setError(res.message);
         }
-
-        localStorage.setItem("user", JSON.stringify(user));
-        navigate("/dashboard");
-    }
+    };
 
     return (
         <>

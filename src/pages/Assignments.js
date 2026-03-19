@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import { useState, useEffect } from "react";
+import { getAssignments, addAssignment, deleteAssignment } from "../utils/api";
 
 function Assignments() {
     const [assignments, setAssignments] = useState([]);
@@ -7,28 +8,37 @@ function Assignments() {
     const [subject, setSubject] = useState("");
     const [dueDate, setDueDate] = useState("");
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     useEffect(() => {
-        const stored = JSON.parse(localStorage.getItem("assignments")) || [];
-        setAssignments(stored);
+        fetchAssignments();
     }, []);
 
-    const addAssignment = (e) => {
+    const fetchAssignments = async () => {
+        const data = await getAssignments(user.id);
+        setAssignments(data);
+    };
+
+    const handleAdd = async (e) => {
         e.preventDefault();
 
-        const newAssignment = {
-            id: Date.now(),
-            title,
+        await addAssignment({
+            user_id: user.id,
             subject,
-            dueDate
-        };
-
-        const updated = [...assignments, newAssignment];
-        localStorage.setItem("assignments", JSON.stringify(updated));
-        setAssignments(updated);
+            title,
+            due_date: dueDate
+        });
 
         setTitle("");
         setSubject("");
         setDueDate("");
+
+        fetchAssignments(); // refresh list
+    };
+
+    const handleDelete = async (id) => {
+        await deleteAssignment(id);
+        fetchAssignments();
     };
 
     return (
@@ -37,7 +47,7 @@ function Assignments() {
             <div className="assignment-container">
                 <h2>Assignment Manager</h2>
 
-                <form onSubmit={addAssignment} className="assignment-form">
+                <form onSubmit={handleAdd} className="assignment-form">
                     <input
                         placeholder="Subject"
                         value={subject}
@@ -64,7 +74,14 @@ function Assignments() {
                         <div key={a.id} className="task-card">
                             <h3>{a.title}</h3>
                             <p>{a.subject}</p>
-                            <small>Due: {a.dueDate}</small>
+                            <small>Due: {a.due_date}</small>
+
+                            <button
+                                style={{ marginTop: "10px", background: "red", color: "white", border: "none", padding: "5px 10px", borderRadius: "5px" }}
+                                onClick={() => handleDelete(a.id)}
+                            >
+                                Delete
+                            </button>
                         </div>
                     ))}
                 </div>

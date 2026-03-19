@@ -1,19 +1,24 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
+import { getTasks, getAssignments } from "../utils/api";
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
     const [assignments, setAssignments] = useState([]);
+
     const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        const storedAssignments =
-            JSON.parse(localStorage.getItem("assignments")) || [];
+        const fetchData = async () => {
+            const tasksData = await getTasks(user.id);
+            const assignmentsData = await getAssignments(user.id);
 
-        setTasks(storedTasks);
-        setAssignments(storedAssignments);
-    }, []);
+            setTasks(tasksData);
+            setAssignments(assignmentsData);
+        };
+
+        fetchData();
+    }, [user.id]);
 
     const completed = tasks.filter(t => t.status === "Completed").length;
     const pending = tasks.filter(t => t.status === "Pending").length;

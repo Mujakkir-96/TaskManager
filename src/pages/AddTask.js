@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle } from "react-icons/fa";
+import { addTask } from "../utils/api";
 
 function AddTask() {
     const [title, setTitle] = useState("");
@@ -11,23 +12,21 @@ function AddTask() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        const user = JSON.parse(localStorage.getItem("user"));
 
-        const newTask = {
-            id: Date.now(),
+        await addTask({
+            user_id: user.id,
             title,
             description,
             deadline,
-            status
-        };
-
-        localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
+            status,
+        });
 
         navigate("/tasks");
-    }
+    };
 
     return (
         <>

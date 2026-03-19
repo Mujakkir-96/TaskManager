@@ -1,37 +1,47 @@
 import Navbar from "../components/Navbar";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { updateTask, getTasks } from "../utils/api";
 
 function EditTask() {
     const { id } = useParams();
     const navigate = useNavigate();
 
     const [task, setTask] = useState({
+        id: "",
         title: "",
         description: "",
         deadline: "",
         status: "Pending"
     });
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     useEffect(() => {
-        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        const selectedTask = tasks.find(t => t.id === parseInt(id));
-        if (selectedTask) setTask(selectedTask);
+        const fetchTask = async () => {
+            const tasks = await getTasks(user.id);
+
+            const selectedTask = tasks.find(
+                t => t.id === id || t.id === parseInt(id)
+            );
+
+            if (selectedTask) {
+                setTask(selectedTask);
+            }
+        };
+
+        fetchTask();
     }, [id]);
 
     const handleChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value });
     };
 
-    const handleUpdate = (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks = tasks.map(t =>
-            t.id === parseInt(id) ? task : t
-        );
+        await updateTask(task);
 
-        localStorage.setItem("tasks", JSON.stringify(tasks));
         navigate("/tasks");
     };
 

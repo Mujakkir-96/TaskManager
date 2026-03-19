@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../utils/api";
 
 function Register() {
     const [name, setName] = useState("");
@@ -7,15 +8,18 @@ function Register() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
 
-        const user = { name, email, password };
-        localStorage.setItem("registeredUser", JSON.stringify(user));
+        const res = await registerUser({ name, email, password });
 
-        alert("Registration successful");
-        navigate("/");
-    }
+        if (res.status === "success") {
+            alert("Registration successful");
+            navigate("/");
+        } else {
+            alert(res.message);
+        }
+    };
 
     return (
         <div className="auth-container">
